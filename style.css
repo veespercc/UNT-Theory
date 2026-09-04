@@ -26,6 +26,9 @@
   --trap-border: #ef4444;
   --trap-text: #fca5a5;
 
+  --generator-bg: #07070a;
+  --generator-border: rgba(56, 189, 248, 0.22);
+
   --safe-bottom: env(safe-area-inset-bottom, 1rem);
 }
 
@@ -135,7 +138,6 @@ body {
   box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.8);
 }
 
-/* Mode Switcher Segmented Control */
 .mode-toggle-wrap {
   width: 100%;
 }
@@ -218,7 +220,6 @@ body {
   pointer-events: none;
 }
 
-/* Category Filter Pills */
 .categories-bar {
   display: flex;
   gap: 0.3rem;
@@ -261,7 +262,7 @@ body {
 .cards-list {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.25rem;
 }
 
 .card {
@@ -271,7 +272,7 @@ body {
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 0.95rem;
   transition: border-color 0.2s, background 0.2s, opacity 0.2s;
   position: relative;
 }
@@ -346,6 +347,156 @@ body {
   background: var(--surface-sub);
   color: var(--text-secondary);
   border: 1px solid var(--border);
+}
+
+/* ========================================================
+   GENERATOR COMPONENT (PRACTICE ENGINE)
+   ======================================================== */
+.generator-widget {
+  background: var(--generator-bg);
+  border: 1px solid var(--generator-border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.generator-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: rgba(56, 189, 248, 0.05);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+}
+
+.generator-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.gen-action-btn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gen-action-btn:hover {
+  background: #e4e4e7;
+}
+
+.gen-action-btn:active {
+  transform: scale(0.95);
+}
+
+.generator-body {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gen-problem-prompt {
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.gen-math-display {
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.85rem 0.65rem;
+  text-align: center;
+  font-size: 1.15rem;
+  overflow-x: auto;
+}
+
+.gen-spoiler-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gen-spoiler-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.gen-spoiler-btn svg {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gen-spoiler-btn.open svg {
+  transform: rotate(180deg);
+}
+
+.gen-solution-panel {
+  display: none;
+  background: #030305;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 0.75rem;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.gen-solution-panel.show {
+  display: flex;
+  animation: slideFade 0.2s ease;
+}
+
+.gen-solution-step {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.gen-solution-wire {
+  background: #09090d;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  padding: 0.4rem 0.6rem;
+  overflow-x: auto;
+  font-size: 0.84rem;
+  margin: 0.15rem 0;
+}
+
+.gen-solution-answer {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(52, 211, 153, 0.08);
+  border-left: 2px solid var(--accent-green);
+  padding: 0.35rem 0.55rem;
+  margin-top: 0.2rem;
 }
 
 /* ========================================================
@@ -589,7 +740,7 @@ body {
   font-weight: 600;
 }
 
-/* Refined Trap Alert */
+/* Trap Alert */
 .trap-card {
   background: var(--trap-bg);
   border-left: 3px solid var(--trap-border);
