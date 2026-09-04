@@ -1,4 +1,4 @@
-// MATH PROBLEM GENERATOR ENGINES (Per Category/Topic)
+с// MATH PROBLEM GENERATOR ENGINES (Per Category/Topic)
 const generators = {
   // 1. Алгебра: Степени
   "alg-1": () => {
@@ -991,7 +991,7 @@ function render() {
               </span>
               <button class="gen-action-btn" onclick="generateNewTask('${item.id}')">
                 <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                Сгенерировать ⟳
+                Сгенерировать
               </button>
             </div>
             <div class="generator-body">
