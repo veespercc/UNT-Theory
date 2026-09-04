@@ -1,4 +1,4 @@
-с// MATH PROBLEM GENERATOR ENGINES (Per Category/Topic)
+// MATH PROBLEM GENERATOR ENGINES (Per Category/Topic)
 const generators = {
   // 1. Алгебра: Степени
   "alg-1": () => {
