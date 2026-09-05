@@ -3,97 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
-  <title>UNT Math Core & Generator</title>
+  <meta name="theme-color" content="#12181a">
+  <title>UNT Math Core | Полный реестр формул и тренажёр ЕНТ</title>
 
-  <!-- Google Fonts (Inter Only) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
-  <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="initMath()"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
-    <!-- Header -->
+  <div class="app-layout">
     <header class="app-header">
-      <div class="top-row">
-        <div class="brand">
-          <span class="status-dot"></span>
-          <span>UNT Core Engine</span>
-        </div>
-        <div class="progress-pill">
-          Изучено <strong id="prog-val">0/0</strong>
-        </div>
+      <div class="top-meta">
+        <div class="brand"><span class="pulse-indicator"></span>UNT Math Core</div>
+        <div class="progress-pill">Изучено <span id="prog-val" class="prog-number">0/0</span></div>
       </div>
-      <h1 class="page-title">Профильная Математика</h1>
-      <p class="page-desc">Интерактивный справочник, теория и генератор практических задач для ЕНТ.</p>
+      <h1 class="page-title">Математика ЕНТ</h1>
+      <p class="page-subtitle">Полная теоретическая база, формулы профильного уровня и адаптивный тренажёр с пошаговыми решениями.</p>
+      <div class="progress-track" aria-hidden="true"><div id="prog-bar-fill" class="progress-fill"></div></div>
     </header>
 
-    <!-- Navigation Dock -->
-    <nav class="sticky-nav">
-      <!-- Mode Switcher -->
-      <div class="mode-toggle-wrap">
-        <div class="mode-toggle">
-          <button id="mode-theory-btn" class="mode-btn" onclick="setMode('theory')">
-            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-            </svg>
-            <span>Краткая теория</span>
-          </button>
-          <button id="mode-formulas-btn" class="mode-btn active" onclick="setMode('formulas')">
-            <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-            </svg>
-            <span>Формулы & Генератор</span>
-          </button>
+    <nav class="sticky-dock">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="search" class="search-input" placeholder="Поиск: Виет, Бернулли, рационализация, конус…" autocomplete="off">
+          <button id="clear-search" class="clear-btn" aria-label="Очистить поиск">&times;</button>
+        </div>
+        <div class="status-toggle">
+          <button class="status-btn active" data-status="all">Все</button>
+          <button class="status-btn" data-status="unlearned">В процессе</button>
+          <button class="status-btn" data-status="mastered">Изучено</button>
         </div>
       </div>
 
-      <!-- Search Input -->
-      <div class="search-wrap">
-        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-        <input type="text" id="search" class="search-input" placeholder="Поиск темы (Виет, логарифм, производная, трапеция)...">
-      </div>
-
-      <!-- Categories Filter -->
       <div class="categories-bar" id="cat-bar">
         <button class="cat-pill active" data-cat="all">Все темы</button>
-        <button class="cat-pill" data-cat="algebra">Алгебра 7–9</button>
+        <button class="cat-pill" data-cat="algebra">Алгебра</button>
         <button class="cat-pill" data-cat="progressions">Прогрессии</button>
         <button class="cat-pill" data-cat="trig">Тригонометрия</button>
-        <button class="cat-pill" data-cat="log">Логарифмы & Степени</button>
-        <button class="cat-pill" data-cat="calculus">Анализ & Производные</button>
-        <button class="cat-pill" data-cat="planimetry">Планиметрия (2D)</button>
-        <button class="cat-pill" data-cat="stereometry">Стереометрия & Векторы</button>
-        <button class="cat-pill" data-cat="probability">Вероятность & Комбинаторика</button>
+        <button class="cat-pill" data-cat="log">Логарифмы</button>
+        <button class="cat-pill" data-cat="calculus">Производная и интеграл</button>
+        <button class="cat-pill" data-cat="planimetry">Планиметрия</button>
+        <button class="cat-pill" data-cat="stereometry">Стереометрия</button>
+        <button class="cat-pill" data-cat="vectors">Векторы</button>
+        <button class="cat-pill" data-cat="probability">Вероятность</button>
       </div>
     </nav>
 
-    <!-- Cards List View -->
-    <main class="cards-list" id="cards-container"></main>
+    <main class="cards-grid" id="cards-container"></main>
   </div>
 
-  <!-- Floating Scroll To Top -->
-  <button id="btnTop" class="btn-top" aria-label="Вверх">
+  <button id="btnTop" class="btn-scroll-top" aria-label="Наверх">
     <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M5 15l7-7 7 7"/>
     </svg>
   </button>
 
-  <!-- Toast -->
-  <div id="toast">Скопировано в буфер</div>
+  <div id="toast">Скопировано</div>
 
-  <!-- Custom Logic & Problem Generators -->
+  <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
