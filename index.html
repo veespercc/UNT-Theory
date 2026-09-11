@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#12181a">
-  <title>UNT Math Core | Полный реестр формул и тренажёр ЕНТ</title>
+  <title>UNT Math Core | Реестр формул, SRS и тренажёр ЕНТ</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,47 +19,135 @@
 <body>
 
   <div class="app-layout">
+    <!-- Шапка приложения -->
     <header class="app-header">
       <div class="top-meta">
-        <div class="brand"><span class="pulse-indicator"></span>UNT Math Core</div>
-        <div class="progress-pill">Изучено <span id="prog-val" class="prog-number">0/0</span></div>
+        <div class="brand">
+          <span class="pulse-indicator"></span>
+          <span>UNT Math Core</span>
+          <span class="streak-badge" id="streak-badge" title="Ударный режим занятий">🔥 0 дн.</span>
+        </div>
+
+        <div class="header-tools">
+          <button class="icon-tool-btn" id="btn-font-dec" title="Уменьшить шрифт" aria-label="Уменьшить шрифт">A-</button>
+          <button class="icon-tool-btn" id="btn-font-inc" title="Увеличить шрифт" aria-label="Увеличить шрифт">A+</button>
+          <button class="icon-tool-btn" id="btn-theme-toggle" title="Сменить тему" aria-label="Сменить тему">🌓</button>
+          <button class="icon-tool-btn" id="btn-stats-modal" title="Статистика и данные" aria-label="Статистика">📊</button>
+          <button class="btn-exam-launch" id="btn-exam-open">⚡ Мини-ЕНТ</button>
+        </div>
       </div>
+
       <h1 class="page-title">Математика ЕНТ</h1>
-      <p class="page-subtitle">Полная теоретическая база, формулы профильного уровня и адаптивный тренажёр с пошаговыми решениями.</p>
-      <div class="progress-track" aria-hidden="true"><div id="prog-bar-fill" class="progress-fill"></div></div>
+      <p class="page-subtitle">Интеллектуальная система запоминания формул, интервальное повторение и адаптивный тренажёр.</p>
+
+      <div class="progress-section">
+        <div class="progress-info-row">
+          <span>Общий прогресс базы:</span>
+          <span id="prog-val" class="prog-number">0/0 (0%)</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div id="prog-bar-fill" class="progress-fill"></div>
+        </div>
+      </div>
     </header>
 
+    <!-- Фильтры и поиск -->
     <nav class="sticky-dock">
       <div class="search-row">
         <div class="search-input-wrap">
           <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
-          <input type="text" id="search" class="search-input" placeholder="Поиск: Виет, Бернулли, рационализация, конус…" autocomplete="off">
+          <input type="text" id="search" class="search-input" placeholder="Поиск (нажмите / для фокуса)…" autocomplete="off">
           <button id="clear-search" class="clear-btn" aria-label="Очистить поиск">&times;</button>
         </div>
+
+        <button class="action-dock-btn" id="btn-random-card" title="Случайная формула для разминки">🎲 Разминка</button>
+      </div>
+
+      <div class="status-row">
         <div class="status-toggle">
           <button class="status-btn active" data-status="all">Все</button>
+          <button class="status-btn" data-status="srs">⏰ К повторению <span class="badge-mini" id="srs-count">0</span></button>
           <button class="status-btn" data-status="unlearned">В процессе</button>
           <button class="status-btn" data-status="mastered">Изучено</button>
         </div>
+        <span class="items-found-label" id="items-found-counter">Найдено: 0</span>
       </div>
 
       <div class="categories-bar" id="cat-bar">
-        <button class="cat-pill active" data-cat="all">Все темы</button>
-        <button class="cat-pill" data-cat="algebra">Алгебра</button>
-        <button class="cat-pill" data-cat="progressions">Прогрессии</button>
-        <button class="cat-pill" data-cat="trig">Тригонометрия</button>
-        <button class="cat-pill" data-cat="log">Логарифмы</button>
-        <button class="cat-pill" data-cat="calculus">Производная и интеграл</button>
-        <button class="cat-pill" data-cat="planimetry">Планиметрия</button>
-        <button class="cat-pill" data-cat="stereometry">Стереометрия</button>
-        <button class="cat-pill" data-cat="vectors">Векторы</button>
-        <button class="cat-pill" data-cat="probability">Вероятность</button>
+        <button class="cat-pill active" data-cat="all">Все темы <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="algebra">Алгебра <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="progressions">Прогрессии <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="trig">Тригонометрия <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="log">Логарифмы <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="calculus">Анализ <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="planimetry">Планиметрия <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="stereometry">Стереометрия <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="vectors">Векторы <span class="cat-count">0</span></button>
+        <button class="cat-pill" data-cat="probability">Вероятность <span class="cat-count">0</span></button>
       </div>
     </nav>
 
+    <!-- Список карточек -->
     <main class="cards-grid" id="cards-container"></main>
+  </div>
+
+  <!-- Модальное окно: Статистика и Синхронизация данных -->
+  <div class="modal-backdrop" id="stats-modal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 class="modal-title">📊 Статистика и Резервное копирование</h3>
+        <button class="modal-close-btn" onclick="closeModal('stats-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="stats-overview-grid">
+          <div class="stat-card">
+            <span class="stat-num" id="stat-solved">0</span>
+            <span class="stat-desc">Решено задач</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-acc">0%</span>
+            <span class="stat-desc">Точность тренажёра</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-srs-ready">0</span>
+            <span class="stat-desc">Требуют повторения</span>
+          </div>
+        </div>
+
+        <h4 class="modal-section-subtitle">Прогресс по разделам</h4>
+        <div class="cat-breakdown-list" id="cat-breakdown"></div>
+
+        <h4 class="modal-section-subtitle">Синхронизация прогресса</h4>
+        <p class="modal-hint">Экспортируйте файл с прогрессом, чтобы перенести его на телефон или восстановить при очистке браузера.</p>
+        <div class="sync-actions-row">
+          <button class="modal-btn primary" onclick="exportProgressJSON()">📥 Скачать файл бэкапа</button>
+          <label class="modal-btn secondary file-input-label">
+            📤 Загрузить файл бэкапа
+            <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importProgressJSON(event)">
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно: Режим экзамена «Мини-ЕНТ» -->
+  <div class="modal-backdrop" id="exam-modal">
+    <div class="modal-window exam-window">
+      <div class="modal-header exam-header">
+        <div class="exam-title-box">
+          <span class="exam-badge">Тестирование</span>
+          <h3 class="modal-title" id="exam-q-title">Вопрос 1 из 10</h3>
+        </div>
+        <div class="exam-timer" id="exam-timer">15:00</div>
+        <button class="modal-close-btn" onclick="closeExam()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="exam-body-container">
+        <!-- Генерируется скриптом -->
+      </div>
+    </div>
   </div>
 
   <button id="btnTop" class="btn-scroll-top" aria-label="Наверх">
@@ -68,7 +156,10 @@
     </svg>
   </button>
 
-  <div id="toast">Скопировано</div>
+  <div id="toast" class="toast-container">
+    <span id="toast-text">Сообщение</span>
+    <button id="toast-undo" class="toast-undo-btn">Отмена</button>
+  </div>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
